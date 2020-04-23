@@ -20,9 +20,11 @@ const validateUser = (req, res, next) => {
 
 	JSON.stringify(body) === "{}"
 		? res.status(400).json({ message: "missing user data" })
-		: !body.username
+		: !body.username || !body.password
 		? res.status(400).json({
-				message: "missing required username field"
+				message: `missing required ${
+					!body.username ? "username" : !body.password ? "password" : null
+				} field`
 		  })
 		: (req.response = body);
 	next();

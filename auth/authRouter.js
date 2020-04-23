@@ -7,7 +7,7 @@ const { validateUser } = require("../api/routes/users/usersMiddleware");
 router.post("/register", validateUser, (req, res) => {
 	let user = req.body;
 
-	const hash = bcrypt.hashSync(user.password, 12);
+	const hash = bcrypt.hashSync(user.password, 8);
 
 	user.password = hash;
 

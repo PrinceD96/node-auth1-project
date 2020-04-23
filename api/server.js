@@ -1,13 +1,13 @@
-const express = require("express");
-const helmet = require("helmet");
+const server = require("express")();
+const json = require("express").json();
+const cors = require("cors")();
+const helmet = require("helmet")();
 const session = require("express-session");
 const restricted = require("../auth/restricted-middleware");
 const knexSessionStore = require("connect-session-knex")(session);
 
 const usersRouter = require("./routes/users/usersRouter");
 const authRouter = require("../auth/authRouter");
-
-const server = express();
 
 const sessionConfig = {
 	name: "unknown",
@@ -29,9 +29,7 @@ const sessionConfig = {
 	})
 };
 
-server.use(express.json());
-server.use(helmet());
-server.use(session(sessionConfig));
+server.use(json, cors, helmet, session(sessionConfig));
 server.use("/api/users", restricted, usersRouter);
 server.use("/api/auth", authRouter);
 
