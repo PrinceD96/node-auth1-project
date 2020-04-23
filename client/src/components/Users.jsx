@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Users = () => {
@@ -7,13 +7,28 @@ const Users = () => {
 	const fetchUsers = () => {
 		axios
 			.get("http://localhost:5000/api/users")
-			.then(users => console.log(users));
+			.then(res => {
+				console.log(users);
+				setUsers(res.data);
+			})
+			.catch(error => console.log(error));
 	};
+
+	useEffect(() => {
+		fetchUsers();
+	}, []);
 
 	return (
 		<>
 			<h1>Yet another users list</h1>
-			<button onClick={fetchUsers}>Fetch users</button>
+			{users ? (
+				<>
+					<h3>List of users</h3>
+					{users.map(user => (
+						<p>{user.username}</p>
+					))}
+				</>
+			) : null}
 		</>
 	);
 };
