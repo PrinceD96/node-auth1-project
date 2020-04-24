@@ -11,7 +11,7 @@ const Login = props => {
 		password: ""
 	});
 	const [token, setToken] = useState(
-		localStorage.getItem("token") ? localStorage.getItem("token") : ""
+		localStorage.getItem("token") ? localStorage.getItem("token") : null
 	);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState("");
@@ -36,7 +36,9 @@ const Login = props => {
 					password: ""
 				});
 				setIsSubmitting(false);
+				console.log("TOKEN", res.data.token);
 				setToken(res.data.token);
+				console.log("token", token);
 				props.history.push("/users");
 			})
 			.catch(error => {
@@ -69,6 +71,7 @@ const Login = props => {
 	return (
 		<div className='register_form_container'>
 			<h3>Welcome Back!</h3>
+			{/* {error ? <p className='login_error'>{error}</p> : null} */}
 			<p className='login_error'>{error}</p>
 			<Formik
 				initialValues={credentials}

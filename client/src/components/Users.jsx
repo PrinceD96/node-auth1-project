@@ -3,10 +3,11 @@ import axios from "axios";
 
 const Users = () => {
 	const [users, setUsers] = useState([]);
+	const token = localStorage.getItem("token");
 
 	const fetchUsers = () => {
 		axios
-			.get("http://localhost:5000/api/users")
+			.get("http://localhost:5000/api/users", token)
 			.then(res => {
 				console.log(users);
 				setUsers(res.data);
